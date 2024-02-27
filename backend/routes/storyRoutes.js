@@ -30,7 +30,7 @@ router.post("/story", async (req, res) => {
             frequency_penalty: 0,
             presence_penalty: 0,
         });
-        res.send(response.choices[0].message.content);
+        res.send(response.data.choices[0].message.content);
     } catch (err) {
         res.status(500).send(err);
     }
