@@ -5,23 +5,22 @@ dotenv.config();
 
 const router = express.Router();
 
-const { Configuration, OpenAIApi, ConflictError } = require("openai");
+const OpenAI = require("openai");
 
-const configuration = new Configuration({
+const configuration = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAiApi(configuration);
+const openai = new OpenAI(configuration);
 
 router.post("/story", async (req, res) => {
     const { prompt } = req.body;
-
     try {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
                 {
-                    role: "assistant", // refer OpenAI documentation in order to understand the concept of role
-                    content: "",
+                    role: "assistant",
+                    content: prompt,
                 },
             ],
             temperature: 1,
@@ -30,9 +29,9 @@ router.post("/story", async (req, res) => {
             frequency_penalty: 0,
             presence_penalty: 0,
         });
-        res.send(response.data.choices[0].message.content);
+        res.send(response.choices[0].message.content);
     } catch (err) {
-        res.status(500).send(err);
+        res.status(500).send({ error: err.message });
     }
 });
 
