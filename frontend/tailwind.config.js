@@ -2,7 +2,14 @@
 module.exports = {
     content: ["./src/**/*.{js,jsx,ts,tsx}"],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                font1: ["Merienda"],
+                font2: ["Pacifico"],
+                font3: ["Damion"],
+                newfont: ["Libre Baskerville"],
+            },
+        },
     },
-    plugins: [],
+    plugins: [require("flowbite/plugin")],
 };
