@@ -1,95 +1,86 @@
-import React, { useState, useEffect } from "react";
+// const BlinkingCursor = ({ visible }) => (
+//     <span
+//         className={`inline-block w-2 h-9 bg-blue-600 mx-1 ${
+//             visible ? "animate-blink" : "hidden"
+//         }`}
+//         style={{ position: "absolute" }}
+//     ></span>
+// );
+
+// const TypingComponent = ({ phrases }) => {
+//     const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+//     const [currentPhrase, setCurrentPhrase] = useState("");
+//     const [typingSpeed] = useState(350); // Adjust typing speed as needed
+//     const [backspacingSpeed] = useState(100); // Adjust backspacing speed as needed
+//     const [backspacing, setBackspacing] = useState(false);
+//     const [showCursor, setShowCursor] = useState(true);
+//     const [pauseAfterTyping] = useState(10000); // Pause duration after typing a complete phrase
+
+//     useEffect(() => {
+//         const phrase = phrases[currentPhraseIndex];
+//         let timeout;
+
+//         if (!backspacing) {
+//             if (currentPhrase.length < phrase.length) {
+//                 timeout = setTimeout(() => {
+//                     setCurrentPhrase(
+//                         phrase.substring(0, currentPhrase.length + 1)
+//                     );
+//                 }, typingSpeed);
+//             } else {
+//                 timeout = setTimeout(() => {
+//                     setBackspacing(true);
+//                 }, pauseAfterTyping);
+//             }
+//         } else {
+//             if (currentPhrase.length > 0) {
+//                 timeout = setTimeout(() => {
+//                     setCurrentPhrase(
+//                         currentPhrase.substring(0, currentPhrase.length - 1)
+//                     );
+//                 }, backspacingSpeed);
+//             } else {
+//                 setBackspacing(false);
+//                 setCurrentPhraseIndex(
+//                     (prevIndex) => (prevIndex + 1) % phrases.length
+//                 );
+//             }
+//         }
+
+//         return () => {
+//             clearTimeout(timeout);
+//         };
+//     }, [
+//         currentPhrase,
+//         currentPhraseIndex,
+//         backspacing,
+//         phrases,
+//         typingSpeed,
+//         backspacingSpeed,
+//         pauseAfterTyping,
+//     ]);
+
+//     useEffect(() => {
+//         const interval = setInterval(() => {
+//             setShowCursor((prevShowCursor) => !prevShowCursor);
+//         }, 500);
+
+//         return () => clearInterval(interval);
+//     }, []);
+
+//     return (
+//         <div style={{ position: "relative", display: "inline-block" }}>
+//             {currentPhrase}
+//             <BlinkingCursor visible={showCursor && !backspacing} />
+//         </div>
+//     );
+// };
+
+import { useEffect, useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 
-const BlinkingCursor = ({ visible }) => (
-    <span
-        className={`inline-block w-2 h-9 bg-blue-600 mx-1 ${
-            visible ? "animate-blink" : "hidden"
-        }`}
-        style={{ position: "absolute" }}
-    ></span>
-);
-
-const TypingComponent = ({ phrases }) => {
-    const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-    const [currentPhrase, setCurrentPhrase] = useState("");
-    const [typingSpeed] = useState(350); // Adjust typing speed as needed
-    const [backspacingSpeed] = useState(100); // Adjust backspacing speed as needed
-    const [backspacing, setBackspacing] = useState(false);
-    const [showCursor, setShowCursor] = useState(true);
-    const [pauseAfterTyping] = useState(10000); // Pause duration after typing a complete phrase
-
-    useEffect(() => {
-        const phrase = phrases[currentPhraseIndex];
-        let timeout;
-
-        if (!backspacing) {
-            if (currentPhrase.length < phrase.length) {
-                timeout = setTimeout(() => {
-                    setCurrentPhrase(
-                        phrase.substring(0, currentPhrase.length + 1)
-                    );
-                }, typingSpeed);
-            } else {
-                timeout = setTimeout(() => {
-                    setBackspacing(true);
-                }, pauseAfterTyping);
-            }
-        } else {
-            if (currentPhrase.length > 0) {
-                timeout = setTimeout(() => {
-                    setCurrentPhrase(
-                        currentPhrase.substring(0, currentPhrase.length - 1)
-                    );
-                }, backspacingSpeed);
-            } else {
-                setBackspacing(false);
-                setCurrentPhraseIndex(
-                    (prevIndex) => (prevIndex + 1) % phrases.length
-                );
-            }
-        }
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [
-        currentPhrase,
-        currentPhraseIndex,
-        backspacing,
-        phrases,
-        typingSpeed,
-        backspacingSpeed,
-        pauseAfterTyping,
-    ]);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setShowCursor((prevShowCursor) => !prevShowCursor);
-        }, 500);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div style={{ position: "relative", display: "inline-block" }}>
-            {currentPhrase}
-            <BlinkingCursor visible={showCursor && !backspacing} />
-        </div>
-    );
-};
-
 function ChatWindow({ messages, showInitialMessage }) {
-    const [displayedLogos, setDisplayedLogos] = useState(new Set());
-
-    const handleLogoDisplay = (index, type) => {
-        if (!displayedLogos.has(`${index}-${type}`)) {
-            setDisplayedLogos(new Set(displayedLogos.add(`${index}-${type}`)));
-            return true;
-        }
-        return false;
-    };
-
     return (
         <div className="flex justify-center w-full pt-4">
             <div className="overflow-y-auto h-96 p-4 mt-4 w-full">
@@ -139,38 +130,7 @@ function ChatWindow({ messages, showInitialMessage }) {
                         key={index}
                         className="mb-2 font-newfont text-base md:text-lg"
                     >
-                        {index % 2 === 0 && (
-                            <img
-                                src={`/path/to/your/${
-                                    index % 4 === 0 ? "logo1.png" : "logo2.png"
-                                }`}
-                                alt="Logo"
-                                className="w-8 h-8 rounded-full inline-block mr-2"
-                                style={{
-                                    display: handleLogoDisplay(index, "you")
-                                        ? "inline-block"
-                                        : "none",
-                                }}
-                            />
-                        )}
                         {message}
-                        {index % 2 !== 0 && (
-                            <img
-                                src={`/path/to/your/${
-                                    index % 4 === 0 ? "logo1.png" : "logo2.png"
-                                }`}
-                                alt="Logo"
-                                className="w-8 h-8 rounded-full inline-block ml-2"
-                                style={{
-                                    display: handleLogoDisplay(
-                                        index,
-                                        "storygen"
-                                    )
-                                        ? "inline-block"
-                                        : "none",
-                                }}
-                            />
-                        )}
                     </div>
                 ))}
             </div>
