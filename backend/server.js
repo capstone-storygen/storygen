@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
-const storyRoutes = require("./routes/storyRoute");
+const storyRoute = require("./routes/storyRoute");
 
 const app = express();
 app.use(cors());
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 dotenv.config();
 
-app.use("/api/", storyRoutes);
+app.use("/api/story", storyRoute);
 
 port = process.env.PORT || 5000;
 
