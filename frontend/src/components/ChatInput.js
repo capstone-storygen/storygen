@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 
-function ChatInput({ onSubmit, firstMessageReceived, onEndStory }) {
+function ChatInput({
+    onSubmit,
+    firstMessageReceived,
+    resetMessages,
+    setShowInitialMessage,
+}) {
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
 
@@ -10,6 +15,12 @@ function ChatInput({ onSubmit, firstMessageReceived, onEndStory }) {
             onSubmit(inputValue);
             setInputValue("");
         }
+    };
+
+    const onNewStory = () => {
+        fetch("/api/story/resetMessages", { method: "POST" });
+        resetMessages();
+        setShowInitialMessage(true);
     };
 
     useEffect(() => {
@@ -31,8 +42,8 @@ function ChatInput({ onSubmit, firstMessageReceived, onEndStory }) {
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder={
                     firstMessageReceived
-                        ? "Control the timeline, introduce new characters..."
-                        : "Write from where the story should begin, you can also introduce characters, set timelines..."
+                        ? "Control the timeline, introduce new characters, Or end the story , ..."
+                        : "Write from where the story should begin, you can also introduce characters, set timelines and much more ..."
                 }
                 className="block w-5/6 h-20 z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                 required
@@ -47,10 +58,10 @@ function ChatInput({ onSubmit, firstMessageReceived, onEndStory }) {
                 {firstMessageReceived && (
                     <button
                         type="button"
-                        onClick={onEndStory}
-                        className="bg-red-500 h-14 my-3 text-white px-2 py-2 rounded-lg ml-2 hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                        onClick={onNewStory}
+                        className="bg-red-500 h-14 my-3 text-white px-1 py-2 rounded-lg ml-2 hover:bg-red-600 focus:outline-none focus:bg-red-600"
                     >
-                        End story
+                        New story
                     </button>
                 )}
             </div>

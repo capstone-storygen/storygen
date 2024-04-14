@@ -41,11 +41,11 @@ function App() {
     const [showAboutUs, setShowAboutUs] = useState(false);
     const [showInitialMessage, setShowInitialMessage] = useState(true);
     const [typing, setTyping] = useState(false); // Added state for typing animation
-    const [firstMessageTyped, setFirstMessageTyped] = useState(false);
+    // const [firstMessageTyped, setFirstMessageTyped] = useState(false);
 
     const resetMessages = () => {
         setMessages([]);
-        setFirstMessageTyped(false); // Reset the firstMessageTyped state
+        // setFirstMessageTyped(false); // Reset the firstMessageTyped state
     };
 
     const handleUserInput = async (userInput) => {
@@ -82,6 +82,18 @@ function App() {
         }
     };
 
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            fetch("/api/story/resetMessages", { method: "POST" }); // Send a request to reset messageHistory in the backend
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+
     return (
         <div className="container mx-auto p-4">
             <NavBar
@@ -105,6 +117,8 @@ function App() {
                         <ChatInput
                             onSubmit={handleUserInput}
                             firstMessageReceived={messages.length > 0}
+                            resetMessages={resetMessages}
+                            setShowInitialMessage={setShowInitialMessage}
                         />
                     )}
                 </>
