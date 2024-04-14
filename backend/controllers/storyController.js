@@ -16,12 +16,96 @@ const openai = new OpenAI(configuration);
 let previousResponse = "";
 let messageHistory = [];
 
+const resetMessageHistory = () => {
+    messageHistory = [];
+    console.log("Message history reset.");
+};
+
 const generateStory = asyncHandler(async (req, res) => {
     const { prompt } = req.body;
     try {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: [
+                {
+                    role: "system",
+                    content: `You are an interactive story generating AI
+
+                Guidelines for story generation:
+
+                -According to the user input part of the story should be generated to be continued.
+
+                -Part of the story should be of at most 120 words for each iteration.
+
+                -For Each iteration Generate part of story then wait for next user input and continue the story according to the next user input.
+
+                -Continue generation in iterations until the user passes an "End the story" Command.
+
+                -The timeline of the story will be controlled by the user.
+
+                -No abusive and explicit content should be allowed.
+
+                -Do not any question like "What will happen next",
+                "What will he do next", etc.
+
+                -When the user input "End the story" do not end story abruptly the story's ending should make sense.
+                `,
+                },
+                {
+                    role: "user",
+                    content: "Hey",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Hello , i am an Interactive Story generator Please provide a story idea to get started",
+                },
+                {
+                    role: "user",
+                    content: "What is 4 - 8",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started",
+                },
+                {
+                    role: "user",
+                    content: "What is my name",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started",
+                },
+                {
+                    role: "user",
+                    content: "What is worlds biggest nation",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator I can generate a story about nations if you like so, Please provide a story idea to get started",
+                },
+                {
+                    role: "user",
+                    content: "Hello whats up",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Hello i am an Interactive Story generator get started with any idea about generating stories ",
+                },
+                {
+                    role: "user",
+                    content: "what is a robot",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator I can generate a story about nations if you like so, Please provide a story idea to get started ",
+                },
+
                 ...messageHistory.map((message) => ({
                     role: message.sender === "ai" ? "assistant" : "user",
                     content: message.text,
@@ -42,7 +126,6 @@ const generateStory = asyncHandler(async (req, res) => {
             presence_penalty: 0,
         });
         previousResponse = response.choices[0].message.content;
-        console.log(previousResponse);
         res.send(response.choices[0].message.content);
     } catch (err) {
         res.status(500).send({ error: err.message });
@@ -50,8 +133,11 @@ const generateStory = asyncHandler(async (req, res) => {
 
     messageHistory.push({ sender: "user", text: prompt });
     messageHistory.push({ sender: "ai", text: previousResponse });
+    console.log(messageHistory);
 });
 
 module.exports = {
     generateStory,
+    messageHistory,
+    resetMessageHistory,
 };
