@@ -45,23 +45,27 @@ function ChatInput({
                         ? "Control the timeline, introduce new characters, Or end the story , ..."
                         : "Write from where the story should begin, you can also introduce characters, set timelines and much more ..."
                 }
-                className="block w-5/6 h-20 z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                className=" shadow hover:shadow-blue-300 hover:shadow-lg  hover:text-slate-800 w-9/12 lg:translate-x-12 h-20 text-base text-gray-900 bg-gray-50 rounded-lg border-2 border-gray-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                 required
             />
             <div className="flex">
                 <button
                     type="submit"
-                    className="bg-blue-500 h-14 my-3 text-white px-2 py-2 rounded-lg ml-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                    className="lg:rounded-bl-xl lg:translate-x-12 bg-blue-500 lg:h-14 lg:my-3 my-5 h-10 text-white px-2 py-2 rounded-full ml-2 hover:bg-blue-600 focus:outline-none focus:bg-blue-600 relative"
                 >
-                    {firstMessageReceived ? "Cont.." : "Generate"}
+                    <span className="lg:hidden">🢂</span>
+                    <span className="hidden lg:inline">
+                        {firstMessageReceived ? "Cont.." : "Generate"}
+                    </span>
                 </button>
                 {firstMessageReceived && (
                     <button
                         type="button"
                         onClick={onNewStory}
-                        className="bg-red-500 h-14 my-3 text-white px-1 py-2 rounded-lg ml-2 hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                        className=" lg:rounded-2xl lg:translate-x-12 bg-red-500 lg:h-14 lg:my-3 my-5 h-10 text-white px-1 py-2 rounded-2xl ml-2 hover:bg-red-600 focus:outline-none focus:bg-red-600 relative"
                     >
-                        New story
+                        <span className="lg:hidden">New</span>
+                        <span className="hidden lg:inline">New story</span>
                     </button>
                 )}
             </div>
