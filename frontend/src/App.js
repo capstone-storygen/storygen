@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ChatInput from "./components/ChatInput";
 import ChatWindow from "./components/ChatWindow";
 import NavBar from "./components/navBar";
-import generateStory from "./utils/storyApi";
+import generateStory from "./Utils/storyApi";
 import AboutUs from "./components/aboutUs";
 
 const TypingComponent = ({ phrases }) => {
