@@ -24,7 +24,7 @@ app.listen(PORT, () => {
 // using this route for testing errorMiddleware
 app.get("/", (req, res) => {
     // throw new Error("test error");
-    // res.send("Hello server");
+    res.send("Hello server");
 });
 
 app.use("/api/story", storyRoute);

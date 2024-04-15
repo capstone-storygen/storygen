@@ -1,0 +1,31 @@
+version: "3"
+services:
+    backend:
+        build:
+            dockerfile: Dockerfile.node
+            context: ./backend
+        volumes:
+            - /app/node_modules
+            - ./backend:/app
+        ports:
+            - "5000:5000"
+        environment:
+            - NODE_ENV=development
+            - PORT=5000
+            #enter openai key without any space
+            #- OPENAI_API_KEY=openai-api-key
+            - FRONTEND = http://frontend:3000
+    frontend:
+        stdin_open: true
+        build:
+            dockerfile: Dockerfile.reactUI
+            context: ./frontend
+        volumes:
+            - /app/node_modules
+            - ./frontend:/app
+        ports:
+            - "3000:3000"
+        environment:
+          - BACKEND_URL=http://backend:5000
+          - DOCKER_ENV=true
+
