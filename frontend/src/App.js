@@ -32,7 +32,7 @@ const TypingComponent = ({ phrases }) => {
 
 const Logo = ({ text }) => (
     <div style={{ marginRight: 5, display: "inline-block" }}>
-        {text === "You" ? "👤" : "🤖"}
+        {text === "You" ? "👤" : "✒️"}
     </div>
 );
 

@@ -49,6 +49,8 @@ const generateStory = asyncHandler(async (req, res) => {
                 "What will he do next", etc.
 
                 -When the user input "End the story" do not end story abruptly the story's ending should make sense.
+
+                -Any Questions starting with "What..", "Where.." , etc should not be answered and you should give a reply "Apologies but i am an Interactive Story generator Please provide a story idea to get started." 
                 `,
                 },
                 {
@@ -85,7 +87,7 @@ const generateStory = asyncHandler(async (req, res) => {
                 {
                     role: "assistant",
                     content:
-                        "Apologies but i am an Interactive Story generator I can generate a story about nations if you like so, Please provide a story idea to get started",
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started",
                 },
                 {
                     role: "user",
@@ -103,7 +105,34 @@ const generateStory = asyncHandler(async (req, res) => {
                 {
                     role: "assistant",
                     content:
-                        "Apologies but i am an Interactive Story generator I can generate a story about nations if you like so, Please provide a story idea to get started ",
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started",
+                },
+                {
+                    role: "user",
+                    content: "what is an elephant",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started.",
+                },
+                {
+                    role: "user",
+                    content: "Tell me some fun facts",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started.",
+                },
+                {
+                    role: "user",
+                    content: "Write a code for python",
+                },
+                {
+                    role: "assistant",
+                    content:
+                        "Apologies but i am an Interactive Story generator Please provide a story idea to get started.",
                 },
 
                 ...messageHistory.map((message) => ({
