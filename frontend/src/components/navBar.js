@@ -3,12 +3,23 @@ import logo from "../assets/logo_light.png";
 
 function NavBar({ setShowAboutUs, setShowInitialMessage, resetMessages }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    let apiUrl = "";
+
+    if (process.env.DOCKER_ENV === "true") {
+        apiUrl = `${
+            process.env.BACKEND_URL || "http://backend:5000"
+        }/api/story`;
+    } else {
+        apiUrl = `${
+            process.env.REACT_APP_BACKEND_URL || "http://localhost:5000"
+        }/api/story`;
+    }
 
     const handleStoryverseClick = () => {
         resetMessages();
         setShowInitialMessage(true);
         setShowAboutUs(false);
-        fetch("/api/story/resetMessages", { method: "POST" }); // Add this line to send a request to reset messageHistory in the backend
+        fetch(`${apiUrl}/resetMessages`, { method: "POST" }); // Add this line to send a request to reset messageHistory in the backend
     };
 
     const toggleMenu = () => {
