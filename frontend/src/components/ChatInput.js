@@ -24,14 +24,17 @@ function ChatInput({
     };
 
     useEffect(() => {
-        if (inputRef.current) {
+        if (
+            inputRef.current &&
+            typeof inputRef.current.scrollIntoView === "function"
+        ) {
             inputRef.current.scrollIntoView({
                 behavior: "smooth",
                 block: "end",
                 inline: "nearest",
             });
         }
-    }, [inputRef]);
+    }, []);
 
     return (
         <form className="w-full fixed bottom-8 flex" onSubmit={handleSubmit}>
