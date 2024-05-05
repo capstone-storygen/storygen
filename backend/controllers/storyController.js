@@ -154,6 +154,7 @@ const generateStory = asyncHandler(async (req, res) => {
             presence_penalty: 0,
         });
         previousResponse = response.choices[0].message.content;
+        console.log("API KEY:", process.env.OPENAI_API_KEY);
         res.send(response.choices[0].message.content);
     } catch (err) {
         res.status(500).send({ error: err.message });
