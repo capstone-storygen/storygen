@@ -46,6 +46,11 @@ pipeline {
 
     }
 
+    stage('Remove Local Image') {
+          steps {
+            sh 'docker rmi $COMPOSE_IMAGE_NAME'
+          }
+        }
 
   }
 
