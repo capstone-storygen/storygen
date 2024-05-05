@@ -1,6 +1,7 @@
 version: "3"
 services:
     backend:
+        image: amanbarar/backend-image:${BUILD_ID}
         build:
             dockerfile: Dockerfile.node
             context: ./backend
@@ -12,10 +13,10 @@ services:
         environment:
             - NODE_ENV=development
             - PORT=5000
-            #enter openai key without any space
-            #- OPENAI_API_KEY=openai-api-key
+            - OPENAI_API_KEY=$OPENAI_API_KEY
             - FRONTEND=http://frontend:3000
     frontend:
+        image: amanbarar/frontend-image:${BUILD_ID}
         stdin_open: true
         build:
             dockerfile: Dockerfile.reactUI

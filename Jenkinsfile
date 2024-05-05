@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     OPENAI_API_KEY = credentials('OPENAI_API_KEY')
+    DOCKER_HUB_CREDENTIALS = credentials('dockerhub')
   }
 
   stages {
@@ -33,12 +34,19 @@ pipeline {
       }
     }
 
-    stage('Build Images') {
+    stage('Build and Push Images') {
       steps {
         sh 'docker-compose build'
+        script {
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+            sh 'docker-compose push'
+          }
       }
 
     }
+
+
   }
 
 }
