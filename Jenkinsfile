@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    OPENAI_API_KEY = credentials('OPENAI_API_KEY')
+  }
   stages {
     stage('Checkout') {
       steps {
@@ -17,10 +20,11 @@ pipeline {
       }
     }
 
-    stage('Backend Tests') {
+    stage('Server Tests') {
       steps {
         dir(path: 'backend') {
           sh 'npm install'
+          sh 'export OPENAI_API_KEY=$OPENAI_API_KEY'
           sh 'npm test'
         }
 
