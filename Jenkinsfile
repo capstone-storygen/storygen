@@ -17,5 +17,15 @@ pipeline {
       }
     }
 
+    stage('Backend Tests') {
+      steps {
+        dir(path: 'backend') {
+          sh 'npm install'
+          sh 'npm test'
+        }
+
+      }
+    }
+
   }
 }
