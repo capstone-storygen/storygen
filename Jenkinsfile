@@ -48,7 +48,7 @@ pipeline {
 
     stage('Remove Local Image') {
           steps {
-            sh 'docker rmi -a --force'
+            sh 'docker image prune -a --force'
           }
         }
 
