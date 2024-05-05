@@ -38,11 +38,10 @@ pipeline {
     stage('Build and Push Images') {
       steps {
         sh 'docker-compose build'
-        script {
-          docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS}") {
-            sh 'docker-compose push'
-          }
-        }
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                    sh 'docker-compose push'
+                }
       }
 
     }
