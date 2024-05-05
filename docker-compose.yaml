@@ -1,7 +1,7 @@
 version: "3"
 services:
     backend:
-        image: amanbarar/storygen/backend-image:${BUILD_ID}
+        image: amanbarar/storygen-backend-image:${BUILD_ID}
         build:
             dockerfile: Dockerfile.node
             context: ./backend
@@ -16,7 +16,7 @@ services:
             - OPENAI_API_KEY=$OPENAI_API_KEY
             - FRONTEND=http://frontend:3000
     frontend:
-        image: amanbarar/storygen/frontend-image:${BUILD_ID}
+        image: amanbarar/storygen-frontend-image:${BUILD_ID}
         stdin_open: true
         build:
             dockerfile: Dockerfile.reactUI
