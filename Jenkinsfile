@@ -7,5 +7,13 @@ pipeline {
 				checkout scm
 			}
 		}
+		stage('Client Tests') {
+			steps {
+				dir('frontend') {
+					sh 'npm install'
+					sh 'npm test'
+				}
+			}
+		}
 	}
 }
