@@ -18,7 +18,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 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",
+						"value": "Bearer <enter API_KEY here>",
 						"uuid": "f402a2a3-293f-4f53-a8fa-bcb48de27cda"
 					}
 				],
