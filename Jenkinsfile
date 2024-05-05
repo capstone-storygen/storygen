@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-    OPENAI_API_KEY = credentials('OPENAI_API_KEY')
-  }
   stages {
     stage('Checkout') {
       steps {
@@ -31,5 +28,8 @@ pipeline {
       }
     }
 
+  }
+  environment {
+    OPENAI_API_KEY = credentials('OPENAI_API_KEY')
   }
 }
