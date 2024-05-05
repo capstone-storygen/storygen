@@ -1,8 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
-const dotenv = require("dotenv");
 
-dotenv.config();
+require("dotenv").config();
 
 const router = express.Router();
 
