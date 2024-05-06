@@ -1,3 +1,3 @@
 # Storygen
 
-Interactive story generation mern app
+Interactive story generation mern web app
