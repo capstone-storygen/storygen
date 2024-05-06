@@ -7,10 +7,6 @@ pipeline {
     COMPOSE_IMAGE_NAME = "amanbarar/composed-image"
   }
 
-  triggers {
-    githubPush(branch: 'main') // Trigger the pipeline on push events to the main branch
-  }
-
   stages {
     stage('Checkout') {
       steps {
