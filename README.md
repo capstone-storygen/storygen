@@ -1,3 +1,3 @@
 # Storygen
 
-Interactive story generation web app.
+Interactive story generation web app
