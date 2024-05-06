@@ -1,3 +1,3 @@
 # Storygen
 
-Interactive
+Interactive story genration
