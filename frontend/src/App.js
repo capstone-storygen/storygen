@@ -42,6 +42,7 @@ function App() {
     const [showInitialMessage, setShowInitialMessage] = useState(true);
     const [typing, setTyping] = useState(false); // Added state for typing animation
     // const [firstMessageTyped, setFirstMessageTyped] = useState(false);
+    const [airesp, setAiresp] = useState([]); // State to store all responses
 
     const resetMessages = () => {
         setMessages([]);
@@ -66,6 +67,8 @@ function App() {
             // Set typing to true to show the loading animation
             setTyping(true);
             const aiResponse = await generateStory(userInput);
+            setAiresp((prevAiresp) => [...prevAiresp, aiResponse]); // Save response to airesp array
+            console.log("airesp:", airesp);
             setMessages((prevMessages) => [
                 ...prevMessages,
                 <>
@@ -100,6 +103,8 @@ function App() {
                 setShowAboutUs={setShowAboutUs}
                 setShowInitialMessage={setShowInitialMessage}
                 resetMessages={resetMessages}
+                airesp={airesp}
+                setAiresp={setAiresp}
             />{" "}
             {showAboutUs ? (
                 <AboutUs />
@@ -119,6 +124,8 @@ function App() {
                             firstMessageReceived={messages.length > 0}
                             resetMessages={resetMessages}
                             setShowInitialMessage={setShowInitialMessage}
+                            airesp={airesp}
+                            setAiresp={setAiresp}
                         />
                     )}
                 </>
