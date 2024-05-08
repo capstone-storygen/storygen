@@ -1,3 +1,3 @@
 # Storygen
 
-Interactive story generation made using MERN stack
+Interactive story generation made using MERN stack.
