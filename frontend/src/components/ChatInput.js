@@ -1,10 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
+import pdfMake from "pdfmake/build/pdfmake.js";
+import pdfFonts from "pdfmake/build/vfs_fonts.js";
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function ChatInput({
     onSubmit,
     firstMessageReceived,
     resetMessages,
     setShowInitialMessage,
+    airesp,
+    setAiresp,
 }) {
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
@@ -17,10 +23,27 @@ function ChatInput({
         }
     };
 
-    const onNewStory = () => {
-        fetch("/api/story/resetMessages", { method: "POST" });
-        resetMessages();
-        setShowInitialMessage(true);
+    const onDownloadStory = () => {
+        // Define the document structure for the PDF
+        const document = {
+            content: [
+                {
+                    text: "Story",
+                    fontStyle: "bold",
+                    alignment: "center",
+                    fontSize: 20,
+                    lineHeight: 2,
+                },
+            ],
+        };
+
+        // Add each response from airesp array to the PDF
+        airesp.forEach((response) => {
+            document.content.push({ text: response, lineHeight: 2 });
+        });
+
+        // Generate and download the PDF
+        pdfMake.createPdf(document).download("story.pdf");
     };
 
     useEffect(() => {
@@ -64,11 +87,11 @@ function ChatInput({
                 {firstMessageReceived && (
                     <button
                         type="button"
-                        onClick={onNewStory}
-                        className=" lg:rounded-2xl lg:translate-x-12 bg-red-500 lg:h-14 lg:my-3 my-5 h-10 text-white px-1 py-2 rounded-2xl ml-2 hover:bg-red-600 focus:outline-none focus:bg-red-600 relative"
+                        onClick={onDownloadStory}
+                        className=" lg:rounded-2xl lg:translate-x-12 bg-green-400 lg:h-14 lg:my-3 my-5 h-10 text-white px-1 py-2 rounded-2xl ml-2 hover:bg-green-600 focus:outline-none focus:bg-red-600 relative"
                     >
-                        <span className="lg:hidden">New</span>
-                        <span className="hidden lg:inline">New story</span>
+                        <span className="lg:hidden">💾</span>
+                        <span className="hidden lg:inline">Download</span>
                     </button>
                 )}
             </div>

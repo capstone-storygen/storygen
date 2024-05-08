@@ -1,7 +1,13 @@
 import { useState } from "react";
 import logo from "../assets/logo_light.png";
 
-function NavBar({ setShowAboutUs, setShowInitialMessage, resetMessages }) {
+function NavBar({
+    setShowAboutUs,
+    setShowInitialMessage,
+    resetMessages,
+    airesp,
+    setAiresp,
+}) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     let apiUrl = "";
 
@@ -19,6 +25,7 @@ function NavBar({ setShowAboutUs, setShowInitialMessage, resetMessages }) {
         resetMessages();
         setShowInitialMessage(true);
         setShowAboutUs(false);
+        setAiresp([]);
         fetch(`${apiUrl}/resetMessages`, { method: "POST" }); // Add this line to send a request to reset messageHistory in the backend
     };
 
