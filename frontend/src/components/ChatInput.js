@@ -91,7 +91,7 @@ function ChatInput({
                         className=" lg:rounded-2xl lg:translate-x-12 bg-green-400 lg:h-14 lg:my-3 my-5 h-10 text-white px-1 py-2 rounded-2xl ml-2 hover:bg-green-600 focus:outline-none focus:bg-red-600 relative"
                     >
                         <span className="lg:hidden">💾</span>
-                        <span className="hidden lg:inline">Downlaod</span>
+                        <span className="hidden lg:inline">Download</span>
                     </button>
                 )}
             </div>
