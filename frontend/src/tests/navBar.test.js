@@ -9,11 +9,15 @@ test("clicking on Storyverse logo resets messages and shows initial message", ()
     const setShowAboutUs = jest.fn();
     const setShowInitialMessage = jest.fn();
     const resetMessages = jest.fn();
+    const airesp = jest.fn();
+    const setAiresp = jest.fn();
     render(
         <NavBar
             setShowAboutUs={setShowAboutUs}
             setShowInitialMessage={setShowInitialMessage}
             resetMessages={resetMessages}
+            airesp={airesp}
+            setAiresp={setAiresp}
         />
     );
 
